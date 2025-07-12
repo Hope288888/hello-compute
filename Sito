@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head><title>Condividi la tua posizione</title></head>
+<body>
+  <h1>Condividi la tua posizione</h1>
+  <button onclick="getLocation()">Condividi la mia posizione</button>
+  <p id="output"></p>
+  <script>
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
+      } else {
+        document.getElementById("output").innerHTML = "Geolocalizzazione non supportata dal tuo browser.";
+      }
+    }
+    function showPosition(position) {
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+      document.getElementById("output").innerHTML =
+        "Latitudine: " + lat + "<br>Longitudine: " + lon;
+    }
+    function showError(error) {
+      switch(error.code) {
+        case error.PERMISSION_DENIED:
+          document.getElementById("output").innerHTML = "Permesso negato.";
+          break;
+        case error.POSITION_UNAVAILABLE:
+          document.getElementById("output").innerHTML = "Posizione non disponibile.";
+          break;
+        case error.TIMEOUT:
+          document.getElementById("output").innerHTML = "Timeout richiesta posizione.";
+          break;
+        default:
+          document.getElementById("output").innerHTML = "Errore sconosciuto.";
+      }
+    }
+  </script>
+</body>
+</html>
